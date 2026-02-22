@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap");
 
 :root {
   --neutral-900: hsl(243, 96%, 9%);
@@ -15,5 +15,26 @@
   --Blue-500: hsl(233, 67%, 56%);
   --Blue-700: hsl(248, 70%, 36%);
 
+  --layout-right-col: 360px;
+  --layout-gap: 24px;
+}
 
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+  background: linear-gradient(180deg, #0b0f3b 0%, #0a0c2c 100%);
+  color: white;
+  -webkit-font-smoothing: antialiased;
 }

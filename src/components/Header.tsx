@@ -1,18 +1,25 @@
-import React from "react";
+import SearchBar from "./SearchBar";
+import UnitsToggle from "./UnitsToggle";
 
-function Header() {
+const Header = () => {
   return (
-    <>
-      <header className="app-header">
-        <div className="brand">
-          <div className="brand-mark"></div>
-          <span className="brand-name">Weather Now</span>
+    <header className="header">
+      <div className="header-top">
+        <div className="logo">
+          <span className="logo-icon" aria-hidden="true" />
+          <span className="logo-text">Weather Now</span>
         </div>
 
-        <button className="units-toggle">
-          <span>Units</span>
-        </button>
-      </header>
-    </>
+        <UnitsToggle />
+      </div>
+
+      <div className="header-title">
+        <h1>How&apos;s the sky looking today?</h1>
+      </div>
+
+      <SearchBar />
+    </header>
   );
-}
+};
+
+export default Header;
