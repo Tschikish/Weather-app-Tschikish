@@ -1,7 +1,11 @@
 import SearchBar from "./SearchBar";
 import UnitsToggle from "./UnitsToggle";
 
-const Header = () => {
+type HeaderProps = {
+  onCitySearch: (city: string) => void;
+}
+
+const Header = ({onCitySearch} : HeaderProps) => {
   return (
     <header className="header">
       <div className="header-top">
@@ -17,7 +21,7 @@ const Header = () => {
         <h1>How&apos;s the sky looking today?</h1>
       </div>
 
-      <SearchBar />
+      <SearchBar onCitySearch = {onCitySearch}/>
     </header>
   );
 };

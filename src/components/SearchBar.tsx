@@ -1,21 +1,48 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useMemo } from "react";
+import { useDebounce } from "../hooks/useDebounce";
+import { Cities } from "../data/cities";
 
-const SearchBar = () => {
+type SearchBarProps = {
+  onCitySearch: (city: string) => void;
+};
+
+const SearchBar = ({ onCitySearch }: SearchBarProps) => {
   const [query, setQuery] = useState("");
+  const debouncedQuery = useDebounce(query, 100);
+
+  const filteredCities = useMemo(() => {
+    if (!debouncedQuery.trim()) return [];
+
+    const lower = debouncedQuery.toLowerCase();
+
+    const beginsWith = Cities.filter((c) =>
+      c.name.toLowerCase().startsWith(lower)
+    );
+
+    const includes = Cities.filter(
+      (c) =>
+        c.name.toLowerCase().includes(lower) &&
+        !c.name.toLowerCase().startsWith(lower)
+    );
+
+    return [...beginsWith, ...includes].slice(0, 8);
+  }, [debouncedQuery]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    // TODO: trigger city search / lat-lon fetch
+    if (!query.trim()) return;
+    onCitySearch(query);
+    setQuery(""); 
   };
 
   return (
     <form className="search" onSubmit={handleSubmit}>
-      {/* SAME shared-gap AS MAIN/ASIDE */}
       <div className="search-row shared-gap">
         <div className="search-input-wrapper">
           <span className="search-icon" aria-hidden="true">
             🔍
           </span>
+
           <input
             className="search-input"
             type="text"
@@ -23,6 +50,23 @@ const SearchBar = () => {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
+
+          {filteredCities.length > 0 && (
+            <ul className="search-dropdown">
+              {filteredCities.map((city) => (
+                <li
+                  key={city.name}
+                  onClick={() => {
+                    onCitySearch(city.name);
+                    setQuery(""); 
+                  }}
+                  className="search-dropdown-item"
+                >
+                  {city.name}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         <button className="search-button" type="submit">

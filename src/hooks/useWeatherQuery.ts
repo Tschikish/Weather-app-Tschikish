@@ -31,21 +31,19 @@ async function fetchWeather(opts: UseWeatherQueryOptions) {
   const { latitude, longitude, units = "metric" } = opts;
 
   const url = buildWeatherUrl(latitude, longitude, units);
+  console.log(url)
   const res = await fetch(url);
 
   if (!res.ok) {
     throw new Error("Failed to fetch weather data");
   }
 
-  // For now be lazy with typing – refine later
   const data = await res.json();
+  console.log(data)
   return data as any;
 }
 
-/**
- * Basic hook for fetching weather data with TanStack Query.
- * You pass in lat/lon + units. Query is disabled until both coords are present.
- */
+
 export function useWeatherQuery(options: UseWeatherQueryOptions | null) {
   return useQuery({
     queryKey: ["weather", options],
@@ -57,6 +55,6 @@ export function useWeatherQuery(options: UseWeatherQueryOptions | null) {
     },
     
     enabled: !!options && !!options.latitude && !!options.longitude,
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 5 * 60 * 1000, 
   });
 }
