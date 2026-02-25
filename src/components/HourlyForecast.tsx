@@ -1,4 +1,4 @@
-const HourlyForecast = () => {
+const HourlyForecast = (data:any) => {
   return (
     <section className="hourly-forecast">
       <header className="hourly-forecast__header">
@@ -26,6 +26,30 @@ const HourlyForecast = () => {
           <div className="hourly-forecast__time">4 PM</div>
           <div className="hourly-forecast__icon" aria-hidden="true">
             ☁️</div>
+          <div className="hourly-forecast__temp">20°</div>
+        </li>
+
+        <li className="hourly-forecast__item">
+          <div className="hourly-forecast__time">3 PM</div>
+          <div className="hourly-forecast__icon" aria-hidden="true">
+            ☁️
+          </div>
+          <div className="hourly-forecast__temp">20°</div>
+        </li>
+
+        <li className="hourly-forecast__item">
+          <div className="hourly-forecast__time">3 PM</div>
+          <div className="hourly-forecast__icon" aria-hidden="true">
+            ☁️
+          </div>
+          <div className="hourly-forecast__temp">20°</div>
+        </li>
+
+        <li className="hourly-forecast__item">
+          <div className="hourly-forecast__time">3 PM</div>
+          <div className="hourly-forecast__icon" aria-hidden="true">
+            ☁️
+          </div>
           <div className="hourly-forecast__temp">20°</div>
         </li>
       </ul>

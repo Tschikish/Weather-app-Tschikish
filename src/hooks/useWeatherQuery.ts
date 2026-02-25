@@ -43,7 +43,6 @@ async function fetchWeather(opts: UseWeatherQueryOptions) {
   return data as any;
 }
 
-
 export function useWeatherQuery(options: UseWeatherQueryOptions | null) {
   return useQuery({
     queryKey: ["weather", options],

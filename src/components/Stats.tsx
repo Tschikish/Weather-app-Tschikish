@@ -1,4 +1,4 @@
-const Stats = () => {
+const Stats = (data: any) => {
   return (
     <section className="weather-stats-row">
       <div className="weather-stat-card">

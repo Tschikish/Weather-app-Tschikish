@@ -1,4 +1,4 @@
-const DailyForecast = () => {
+const DailyForecast = (data: any) => {
   return (
     <section className="daily-forecast">
       <h2 className="section-title">Daily forecast</h2>

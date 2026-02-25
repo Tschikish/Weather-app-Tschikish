@@ -1,12 +1,14 @@
 import bgImageLRG from "../assets/images/bg-today-large.svg";
 
-const WeatherMainCard = () => {
+const WeatherMainCard = (data: any) => {
+
+  console.log(data)
   return (
     <section className="weather-main-card"
     style={{backgroundImage: `url(${bgImageLRG})`}}>
       <div className="weather-main-card__body">
         <div className="weather-main-card__location">
-          <p className="weather-main-card__city">City, Country</p>
+          <p className="weather-main-card__city">{data?.data?.longitude}</p>
           <p className="weather-main-card__date">Tuesday, Aug 5, 2025</p>
         </div>
 

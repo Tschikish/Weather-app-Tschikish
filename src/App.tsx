@@ -8,28 +8,26 @@ import HourlyForecast from "./components/HourlyForecast";
 
 import { useWeatherQuery } from "./hooks/useWeatherQuery";
 import type { UseWeatherQueryOptions, Units } from "./hooks/useWeatherQuery";
-import { Cities } from "./data/Cities";
+import { Cities } from "./data/cities";
 
 const App = () => {
   const [units, setUnits] = useState<Units>("metric");
-
-  // coords will drive the weather query
   const [coords, setCoords] = useState<UseWeatherQueryOptions | null>(null);
 
-  // Run weather query whenever coords or units change
   const {
-    data: weatherData,
+    data: apiData,
     isLoading,
     error,
   } = useWeatherQuery(coords ? { ...coords, units } : null);
-
-  useEffect(() => {
-    setCoords({
-      latitude: 52.52,
-      longitude: 13.41,
-      units: "metric",
-    });
-  }, []);
+  let weatherData = apiData;
+  console.log(weatherData?.longitude);
+  // useEffect(() => {
+  //   setCoords({
+  //     latitude: 52.52,
+  //     longitude: 13.41,
+  //     units: "metric",
+  //   });
+  // }, []);
 
   const handleCitySearch = (cityName: string) => {
     const match = Cities.find(
@@ -55,13 +53,13 @@ const App = () => {
       <main className="page-main">
         <div className="content-row shared-gap">
           <section className="content-main">
-            <WeatherMainCard />
-            <Stats />
-            <DailyForecast />
+            <WeatherMainCard data={weatherData} />
+            <Stats data={weatherData} />
+            <DailyForecast data={weatherData} />
           </section>
 
           <aside className="content-sidebar">
-            <HourlyForecast />
+            <HourlyForecast data={weatherData} />
           </aside>
         </div>
       </main>
