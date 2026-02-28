@@ -41,8 +41,6 @@
 }
 
 /* Top button */
-
-
 .units-toggle__button {
   background: rgba(255, 255, 255, 0.08);
   border: none;
@@ -143,11 +141,9 @@
   font-size: 13px;
 }
 
-
-
 .search {
-  width: 100%;        
-  margin: 0;         
+  width: 100%;
+  margin: 0;
 }
 
 .search-row {
@@ -324,6 +320,7 @@
   background: #1a1f4f;
   border-radius: 20px;
   padding: 24px;
+  padding-bottom: 12px;
   height: 100%;
 }
 
@@ -334,20 +331,68 @@
   margin-bottom: 24px;
 }
 
-.hourly-forecast__day-switch {
+/* NEW: day selector styles for current HourlyForecast.tsx */
+
+.hourly-forecast__day-selector {
+  position: relative;
+}
+
+.hourly-forecast__day-button {
   background: #252a66;
   border: none;
   color: white;
   padding: 6px 12px;
   border-radius: 8px;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
+.hourly-forecast__chevron {
+  font-size: 0.8rem;
+}
+
+/* Dropdown panel */
+.hourly-forecast__day-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.5rem);
+  min-width: 140px;
+  padding: 0.4rem 0;
+  margin: 0;
+  list-style: none;
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.96);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  z-index: 20;
+}
+
+.hourly-forecast__day-option {
+  padding: 0.35rem 0.85rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.hourly-forecast__day-option:hover {
+  background: rgba(148, 163, 184, 0.15);
+}
+
+.hourly-forecast__day-option--selected {
+  font-weight: 600;
+  background: rgba(59, 130, 246, 0.25);
+}
+
+/* HOURLY LIST: scrollable from 00:00–23:00 */
 .hourly-forecast__list {
   list-style: none;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  max-height: 360px;      /* adjust to fit your design */
+  overflow-y: auto;       /* vertical scroll */
+  overflow-x: hidden;     /* hide horizontal overflow */
 }
 
 .hourly-forecast__item {

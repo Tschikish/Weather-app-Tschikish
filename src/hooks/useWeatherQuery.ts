@@ -5,12 +5,9 @@ export type Units = "metric" | "imperial";
 export interface UseWeatherQueryOptions {
   latitude: number;
   longitude: number;
-  units?: Units;
 }
 
-const buildWeatherUrl = (latitude: number, longitude: number, units: Units) => {
-  const isMetric = units === "metric";
-
+const buildWeatherUrl = (latitude: number, longitude: number) => {
   const searchParams = new URLSearchParams({
     latitude: latitude.toString(),
     longitude: longitude.toString(),
@@ -19,41 +16,40 @@ const buildWeatherUrl = (latitude: number, longitude: number, units: Units) => {
     daily:
       "weathercode,temperature_2m_max,temperature_2m_min,precipitation_sum",
     timezone: "auto",
-    temperature_unit: isMetric ? "celsius" : "fahrenheit",
-    windspeed_unit: isMetric ? "kmh" : "mph",
+    // always fetch metric
+    temperature_unit: "celsius",
+    windspeed_unit: "kmh",
     precipitation_unit: "mm",
   });
 
   return `https://api.open-meteo.com/v1/forecast?${searchParams.toString()}`;
 };
 
-async function fetchWeather(opts: UseWeatherQueryOptions) {
-  const { latitude, longitude, units = "metric" } = opts;
+async function fetchWeather(options: UseWeatherQueryOptions) {
+  const { latitude, longitude } = options;
+  const url = buildWeatherUrl(latitude, longitude);
 
-  const url = buildWeatherUrl(latitude, longitude, units);
-  console.log(url)
   const res = await fetch(url);
-
   if (!res.ok) {
     throw new Error("Failed to fetch weather data");
   }
 
   const data = await res.json();
-  console.log(data)
-  return data as any;
+  return data;
 }
 
 export function useWeatherQuery(options: UseWeatherQueryOptions | null) {
   return useQuery({
-    queryKey: ["weather", options],
+    queryKey: options
+      ? ["weather", options.latitude, options.longitude]
+      : ["weather", "no-coords"],
     queryFn: () => {
       if (!options) {
         throw new Error("Missing coordinates");
       }
       return fetchWeather(options);
     },
-    
     enabled: !!options && !!options.latitude && !!options.longitude,
-    staleTime: 5 * 60 * 1000, 
+    staleTime: 5 * 60 * 1000,
   });
 }

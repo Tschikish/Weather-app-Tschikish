@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import Header from "./components/Header";
 import WeatherMainCard from "./components/WeatherMainCard";
@@ -14,21 +14,10 @@ const App = () => {
   const [units, setUnits] = useState<Units>("metric");
   const [coords, setCoords] = useState<UseWeatherQueryOptions | null>(null);
 
-  const {
-    data: apiData,
-    isLoading,
-    error,
-  } = useWeatherQuery(coords ? { ...coords, units } : null);
-  let weatherData = apiData;
-  console.log(weatherData?.longitude);
-  // useEffect(() => {
-  //   setCoords({
-  //     latitude: 52.52,
-  //     longitude: 13.41,
-  //     units: "metric",
-  //   });
-  // }, []);
+  const { data: apiData, isLoading, error } = useWeatherQuery(coords);
 
+  const weatherData = apiData ?? null;
+  console.log(weatherData);
   const handleCitySearch = (cityName: string) => {
     const match = Cities.find(
       (c) => c.name.toLowerCase() === cityName.toLowerCase(),
@@ -42,26 +31,39 @@ const App = () => {
     setCoords({
       latitude: match.lat,
       longitude: match.lng,
-      units,
     });
   };
 
   return (
     <div className="app-root">
-      <Header onCitySearch={handleCitySearch} />
+      <Header
+        onCitySearch={handleCitySearch}
+        units={units}
+        onUnitsChange={setUnits}
+      />
 
       <main className="page-main">
-        <div className="content-row shared-gap">
+        {/* You already have .content-row / .content-main / .content-sidebar in CSS */}
+        <div className="content-row">
           <section className="content-main">
-            <WeatherMainCard data={weatherData} />
-            <Stats data={weatherData} />
-            <DailyForecast data={weatherData} />
+            <WeatherMainCard data={weatherData} units={units} />
+            <Stats data={weatherData} units={units} />
+            <DailyForecast data={weatherData} units={units} />
           </section>
 
           <aside className="content-sidebar">
-            <HourlyForecast data={weatherData} />
+            <HourlyForecast data={weatherData} units={units} />
           </aside>
         </div>
+
+        {isLoading && !weatherData && (
+          <p style={{ marginTop: "16px" }}>Loading weather…</p>
+        )}
+        {error && (
+          <p style={{ marginTop: "16px", color: "#f66" }}>
+            Failed to load weather data.
+          </p>
+        )}
       </main>
     </div>
   );

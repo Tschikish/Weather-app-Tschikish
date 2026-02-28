@@ -1,16 +1,15 @@
 import { useState, useRef, useEffect } from "react";
+import type { Units } from "../hooks/useWeatherQuery";
 
-type Mode = "metric" | "imperial";
+type UnitsToggleProps = {
+  mode: Units; // "metric" | "imperial"
+  onModeChange: (mode: Units) => void;
+};
 
-const UnitsToggle = () => {
+const UnitsToggle = ({ mode, onModeChange }: UnitsToggleProps) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  // top-level mode
-  const [mode, setMode] = useState<Mode>("metric");
-
-  // per-section selections
   const [temperature, setTemperature] = useState<"celsius" | "fahrenheit">(
-    "celsius"
+    "celsius",
   );
   const [windSpeed, setWindSpeed] = useState<"kmh" | "mph">("kmh");
   const [precipitation, setPrecipitation] = useState<"mm" | "inch">("mm");
@@ -20,22 +19,20 @@ const UnitsToggle = () => {
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 
   const handleModeToggle = () => {
-    setMode((prev) => {
-      const next = prev === "metric" ? "imperial" : "metric";
+    const next = mode === "metric" ? "imperial" : "metric";
 
-      // optional: sync sub-units when switching mode
-      if (next === "metric") {
-        setTemperature("celsius");
-        setWindSpeed("kmh");
-        setPrecipitation("mm");
-      } else {
-        setTemperature("fahrenheit");
-        setWindSpeed("mph");
-        setPrecipitation("inch");
-      }
+    // keep sub-units in sync with global mode
+    if (next === "metric") {
+      setTemperature("celsius");
+      setWindSpeed("kmh");
+      setPrecipitation("mm");
+    } else {
+      setTemperature("fahrenheit");
+      setWindSpeed("mph");
+      setPrecipitation("inch");
+    }
 
-      return next;
-    });
+    onModeChange(next);
   };
 
   // Close on outside click
@@ -52,6 +49,50 @@ const UnitsToggle = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // Helper: picking a temperature unit implies global mode
+  // Remove this Caki
+  const selectTemperature = (value: "celsius" | "fahrenheit") => {
+    setTemperature(value);
+    if (value === "celsius" && mode !== "metric") {
+      onModeChange("metric");
+      setWindSpeed("kmh");
+      setPrecipitation("mm");
+    }
+    if (value === "fahrenheit" && mode !== "imperial") {
+      onModeChange("imperial");
+      setWindSpeed("mph");
+      setPrecipitation("inch");
+    }
+  };
+
+  const selectWindSpeed = (value: "kmh" | "mph") => {
+    setWindSpeed(value);
+    if (value === "kmh" && mode !== "metric") {
+      onModeChange("metric");
+      setTemperature("celsius");
+      setPrecipitation("mm");
+    }
+    if (value === "mph" && mode !== "imperial") {
+      onModeChange("imperial");
+      setTemperature("fahrenheit");
+      setPrecipitation("inch");
+    }
+  };
+
+  const selectPrecipitation = (value: "mm" | "inch") => {
+    setPrecipitation(value);
+    if (value === "mm" && mode !== "metric") {
+      onModeChange("metric");
+      setTemperature("celsius");
+      setWindSpeed("kmh");
+    }
+    if (value === "inch" && mode !== "imperial") {
+      onModeChange("imperial");
+      setTemperature("fahrenheit");
+      setWindSpeed("mph");
+    }
+  };
 
   return (
     <div className="units-toggle" ref={wrapperRef}>
@@ -87,7 +128,7 @@ const UnitsToggle = () => {
               className={`units-toggle__option ${
                 temperature === "celsius" ? "is-active" : ""
               }`}
-              onClick={() => setTemperature("celsius")}
+              onClick={() => selectTemperature("celsius")}
               role="option"
               aria-selected={temperature === "celsius"}
             >
@@ -102,7 +143,7 @@ const UnitsToggle = () => {
               className={`units-toggle__option ${
                 temperature === "fahrenheit" ? "is-active" : ""
               }`}
-              onClick={() => setTemperature("fahrenheit")}
+              onClick={() => selectTemperature("fahrenheit")}
               role="option"
               aria-selected={temperature === "fahrenheit"}
             >
@@ -121,7 +162,7 @@ const UnitsToggle = () => {
               className={`units-toggle__option ${
                 windSpeed === "kmh" ? "is-active" : ""
               }`}
-              onClick={() => setWindSpeed("kmh")}
+              onClick={() => selectWindSpeed("kmh")}
               role="option"
               aria-selected={windSpeed === "kmh"}
             >
@@ -136,7 +177,7 @@ const UnitsToggle = () => {
               className={`units-toggle__option ${
                 windSpeed === "mph" ? "is-active" : ""
               }`}
-              onClick={() => setWindSpeed("mph")}
+              onClick={() => selectWindSpeed("mph")}
               role="option"
               aria-selected={windSpeed === "mph"}
             >
@@ -155,7 +196,7 @@ const UnitsToggle = () => {
               className={`units-toggle__option ${
                 precipitation === "mm" ? "is-active" : ""
               }`}
-              onClick={() => setPrecipitation("mm")}
+              onClick={() => selectPrecipitation("mm")}
               role="option"
               aria-selected={precipitation === "mm"}
             >
@@ -170,7 +211,7 @@ const UnitsToggle = () => {
               className={`units-toggle__option ${
                 precipitation === "inch" ? "is-active" : ""
               }`}
-              onClick={() => setPrecipitation("inch")}
+              onClick={() => selectPrecipitation("inch")}
               role="option"
               aria-selected={precipitation === "inch"}
             >
