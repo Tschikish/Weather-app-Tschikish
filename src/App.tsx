@@ -10,14 +10,17 @@ import { useWeatherQuery } from "./hooks/useWeatherQuery";
 import type { UseWeatherQueryOptions, Units } from "./hooks/useWeatherQuery";
 import { Cities } from "./data/cities";
 
+import { METRIC_UNIT_SETTINGS, type UnitSettings } from "./utils/units";
+
 const App = () => {
   const [units, setUnits] = useState<Units>("metric");
+  const [unitSettings, setUnitSettings] =
+    useState<UnitSettings>(METRIC_UNIT_SETTINGS);
   const [coords, setCoords] = useState<UseWeatherQueryOptions | null>(null);
 
   const { data: apiData, isLoading, error } = useWeatherQuery(coords);
-
   const weatherData = apiData ?? null;
-  console.log(weatherData);
+
   const handleCitySearch = (cityName: string) => {
     const match = Cities.find(
       (c) => c.name.toLowerCase() === cityName.toLowerCase(),
@@ -40,19 +43,20 @@ const App = () => {
         onCitySearch={handleCitySearch}
         units={units}
         onUnitsChange={setUnits}
+        unitSettings={unitSettings}
+        onUnitSettingsChange={setUnitSettings}
       />
 
       <main className="page-main">
-        {/* You already have .content-row / .content-main / .content-sidebar in CSS */}
         <div className="content-row">
           <section className="content-main">
-            <WeatherMainCard data={weatherData} units={units} />
-            <Stats data={weatherData} units={units} />
-            <DailyForecast data={weatherData} units={units} />
+            <WeatherMainCard data={weatherData} units={unitSettings} />
+            <Stats data={weatherData} units={unitSettings} />
+            <DailyForecast data={weatherData} units={unitSettings} />
           </section>
 
           <aside className="content-sidebar">
-            <HourlyForecast data={weatherData} units={units} />
+            <HourlyForecast data={weatherData} units={unitSettings} />
           </aside>
         </div>
 

@@ -1,23 +1,36 @@
 import SearchBar from "./SearchBar";
 import UnitsToggle from "./UnitsToggle";
 import type { Units } from "../hooks/useWeatherQuery";
+import type { UnitSettings } from "../utils/units";
 
 type HeaderProps = {
   onCitySearch: (city: string) => void;
   units: Units;
   onUnitsChange: (units: Units) => void;
+  unitSettings: UnitSettings;
+  onUnitSettingsChange: (settings: UnitSettings) => void;
 };
 
-const Header = ({ onCitySearch, units, onUnitsChange }: HeaderProps) => {
+const Header = ({
+  onCitySearch,
+  units,
+  onUnitsChange,
+  unitSettings,
+  onUnitSettingsChange,
+}: HeaderProps) => {
   return (
     <header className="header">
       <div className="header-top">
         <div className="logo">
           <span className="logo-icon" aria-hidden="true" />
-          <span className="logo-text">Weather Now</span>
         </div>
 
-        <UnitsToggle mode={units} onModeChange={onUnitsChange} />
+        <UnitsToggle
+          mode={units}
+          onModeChange={onUnitsChange}
+          unitSettings={unitSettings}
+          onUnitSettingsChange={onUnitSettingsChange}
+        />
       </div>
 
       <div className="header-title">

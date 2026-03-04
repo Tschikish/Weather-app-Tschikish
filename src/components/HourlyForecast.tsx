@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect, useMemo } from "react";
-import type { Units } from "../hooks/useWeatherQuery";
-import { tempUnitLabel, convertTemp } from "../utils/units";
+import { tempUnitLabel, convertTemp, type UnitSettings } from "../utils/units";
 
 const DAYS_OF_WEEK = [
   "Monday",
@@ -14,7 +13,12 @@ const DAYS_OF_WEEK = [
 
 type HourlyForecastProps = {
   data: any;
-  units: Units;
+  units: UnitSettings;
+};
+
+type HourEntry = {
+  label: string;
+  temp: number | null;
 };
 
 const HourlyForecast = ({ data, units }: HourlyForecastProps) => {
@@ -22,15 +26,13 @@ const HourlyForecast = ({ data, units }: HourlyForecastProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
-  const unitLabel = tempUnitLabel(units);
+  const unitLabel = tempUnitLabel(units.temperature);
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 
   const handleSelectDay = (day: string) => {
     setSelectedDay(day);
     setIsOpen(false);
-    // NOTE: we still show the first 24 hours; you can later
-    // slice by day using data.hourly.time if you want.
   };
 
   useEffect(() => {
@@ -47,33 +49,35 @@ const HourlyForecast = ({ data, units }: HourlyForecastProps) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Build 24-hour list (00:00–23:00) and plug in temps if we have them
-  const hours = useMemo(() => {
+  const hours: HourEntry[] = useMemo(() => {
+    const times: string[] | undefined = data?.hourly?.time;
+    const tempsC: number[] | undefined = data?.hourly?.temperature_2m;
+
     const formatter = new Intl.DateTimeFormat("en-US", {
       hour: "numeric",
       hour12: true,
     });
 
-    const tempsC: number[] | undefined = data?.hourly?.temperature_2m;
+    if (!Array.isArray(times) || !Array.isArray(tempsC)) {
+      return Array.from({ length: 24 }, (_, hour) => ({
+        label: formatter.format(new Date(1970, 0, 1, hour, 0, 0)),
+        temp: null,
+      }));
+    }
 
-    return Array.from({ length: 24 }, (_, hour) => {
-      // label like "12 AM", "1 AM", ..., "11 PM"
-      const label = formatter.format(new Date(1970, 0, 1, hour, 0, 0));
-
+    return times.slice(0, 24).map((isoString, index) => {
+      const date = new Date(isoString);
       const rawC =
-        Array.isArray(tempsC) && typeof tempsC[hour] === "number"
-          ? tempsC[hour]
-          : null;
-
+        typeof tempsC[index] === "number" ? tempsC[index] : null;
       const converted =
-        rawC !== null ? Math.round(convertTemp(rawC, units)) : null;
+        rawC !== null ? Math.round(convertTemp(rawC, units.temperature)) : null;
 
       return {
-        label,
+        label: formatter.format(date),
         temp: converted,
       };
     });
-  }, [data, units]);
+  }, [data, units.temperature]);
 
   return (
     <section className="hourly-forecast">
@@ -124,19 +128,19 @@ const HourlyForecast = ({ data, units }: HourlyForecastProps) => {
         </div>
       </header>
 
-      {/* Scrollable list from midnight to 11 PM */}
       <ul className="hourly-forecast__list">
         {hours.map((hour, index) => (
           <li key={index} className="hourly-forecast__item">
             <div className="hourly-forecast__time">{hour.label}</div>
 
             <div className="hourly-forecast__icon" aria-hidden="true">
-              {/* TODO: map from data.hourly.weathercode later */}
               ☀️
             </div>
 
             <div className="hourly-forecast__temp">
-              {hour.temp !== null ? `${hour.temp}${unitLabel}` : `–${unitLabel}`}
+              {hour.temp !== null
+                ? `${hour.temp}${unitLabel}`
+                : `–${unitLabel}`}
             </div>
           </li>
         ))}

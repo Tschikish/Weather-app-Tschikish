@@ -1,31 +1,56 @@
-import type { Units } from "../hooks/useWeatherQuery";
+// src/utils/units.ts
 
-export function convertTemp(valueCelsius: number, units: Units): number {
-  if (units === "metric") return valueCelsius;
-  // °F = °C × 9/5 + 32
-  return valueCelsius * 9/5 + 32;
+export type TemperatureUnit = "celsius" | "fahrenheit";
+export type WindSpeedUnit = "kmh" | "mph";
+export type PrecipitationUnit = "mm" | "inch";
+
+export type UnitSettings = {
+  temperature: TemperatureUnit;
+  windSpeed: WindSpeedUnit;
+  precipitation: PrecipitationUnit;
+};
+
+export const METRIC_UNIT_SETTINGS: UnitSettings = {
+  temperature: "celsius",
+  windSpeed: "kmh",
+  precipitation: "mm",
+};
+
+export const IMPERIAL_UNIT_SETTINGS: UnitSettings = {
+  temperature: "fahrenheit",
+  windSpeed: "mph",
+  precipitation: "inch",
+};
+
+export function convertTemp(
+  valueCelsius: number,
+  unit: TemperatureUnit,
+): number {
+  if (unit === "celsius") return valueCelsius;
+  return (valueCelsius * 9) / 5 + 32;
 }
 
-export function convertWind(valueKmh: number, units: Units): number {
-  if (units === "metric") return valueKmh;
-  // mph = km/h ÷ 1.60934
+export function convertWind(valueKmh: number, unit: WindSpeedUnit): number {
+  if (unit === "kmh") return valueKmh;
   return valueKmh / 1.60934;
 }
 
-export function convertPrecip(valueMm: number, units: Units): number {
-  if (units === "metric") return valueMm;
-  // inches = mm ÷ 25.4
+export function convertPrecip(
+  valueMm: number,
+  unit: PrecipitationUnit,
+): number {
+  if (unit === "mm") return valueMm;
   return valueMm / 25.4;
 }
 
-export function tempUnitLabel(units: Units): "°C" | "°F" {
-  return units === "metric" ? "°C" : "°F";
+export function tempUnitLabel(unit: TemperatureUnit): "°C" | "°F" {
+  return unit === "celsius" ? "°C" : "°F";
 }
 
-export function windUnitLabel(units: Units): "km/h" | "mph" {
-  return units === "metric" ? "km/h" : "mph";
+export function windUnitLabel(unit: WindSpeedUnit): "km/h" | "mph" {
+  return unit === "kmh" ? "km/h" : "mph";
 }
 
-export function precipUnitLabel(units: Units): "mm" | "in" {
-  return units === "metric" ? "mm" : "in";
+export function precipUnitLabel(unit: PrecipitationUnit): "mm" | "in" {
+  return unit === "mm" ? "mm" : "in";
 }

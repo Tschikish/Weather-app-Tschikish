@@ -1,14 +1,15 @@
 import bgImageLRG from "../assets/images/bg-today-large.svg";
-import type { Units } from "../hooks/useWeatherQuery";
-import { convertTemp, tempUnitLabel } from "../utils/units";
+import { convertTemp, tempUnitLabel, type UnitSettings } from "../utils/units";
 
 type WeatherMainCardProps = {
   data: any;
-  units: Units;
+  units: UnitSettings;
 };
 
 const WeatherMainCard = ({ data, units }: WeatherMainCardProps) => {
   if (!data) {
+    const unitLabel = tempUnitLabel(units.temperature);
+
     return (
       <section
         className="weather-main-card"
@@ -27,7 +28,7 @@ const WeatherMainCard = ({ data, units }: WeatherMainCardProps) => {
             <p className="weather-main-card__temp">
               <span className="weather-main-card__temp-value">–</span>
               <span className="weather-main-card__temp-unit">
-                {tempUnitLabel(units)}
+                {unitLabel}
               </span>
             </p>
           </div>
@@ -36,14 +37,29 @@ const WeatherMainCard = ({ data, units }: WeatherMainCardProps) => {
     );
   }
 
-  // crude "current" temperature example (you can refine which index you use)
-  const rawTempC =
-    data?.hourly?.temperature_2m?.[0] ??
-    data?.daily?.temperature_2m_max?.[0] ??
-    0;
+  const hourlyTemps: number[] | undefined = data?.hourly?.temperature_2m;
+  const dailyMax: number[] | undefined = data?.daily?.temperature_2m_max;
+  const dailyTimes: string[] | undefined = data?.daily?.time;
 
-  const convertedTemp = Math.round(convertTemp(rawTempC, units));
-  const unitLabel = tempUnitLabel(units);
+  let rawTempC = 0;
+  if (Array.isArray(hourlyTemps) && hourlyTemps.length > 0) {
+    rawTempC = hourlyTemps[0];
+  } else if (Array.isArray(dailyMax) && dailyMax.length > 0) {
+    rawTempC = dailyMax[0];
+  }
+
+  const unitLabel = tempUnitLabel(units.temperature);
+  const convertedTemp = Math.round(convertTemp(rawTempC, units.temperature));
+
+  let dateLabel = "";
+  if (Array.isArray(dailyTimes) && dailyTimes.length > 0) {
+    const d = new Date(dailyTimes[0]);
+    dateLabel = d.toLocaleDateString(undefined, {
+      weekday: "long",
+      month: "short",
+      day: "numeric",
+    });
+  }
 
   return (
     <section
@@ -52,11 +68,8 @@ const WeatherMainCard = ({ data, units }: WeatherMainCardProps) => {
     >
       <div className="weather-main-card__body">
         <div className="weather-main-card__location">
-          <p className="weather-main-card__city">
-            {/* Later: pass city name from App */}
-            Current location
-          </p>
-          <p className="weather-main-card__date">Tuesday, Aug 5, 2025</p>
+          <p className="weather-main-card__city">Current location</p>
+          <p className="weather-main-card__date">{dateLabel}</p>
         </div>
 
         <div className="weather-main-card__summary">

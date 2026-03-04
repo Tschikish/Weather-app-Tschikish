@@ -16,13 +16,13 @@ const SearchBar = ({ onCitySearch }: SearchBarProps) => {
     const lower = debouncedQuery.toLowerCase();
 
     const beginsWith = Cities.filter((c) =>
-      c.name.toLowerCase().startsWith(lower)
+      c.name.toLowerCase().startsWith(lower),
     );
 
     const includes = Cities.filter(
       (c) =>
         c.name.toLowerCase().includes(lower) &&
-        !c.name.toLowerCase().startsWith(lower)
+        !c.name.toLowerCase().startsWith(lower),
     );
 
     return [...beginsWith, ...includes].slice(0, 8);
@@ -32,7 +32,12 @@ const SearchBar = ({ onCitySearch }: SearchBarProps) => {
     e.preventDefault();
     if (!query.trim()) return;
     onCitySearch(query);
-    setQuery(""); 
+    setQuery("");
+  };
+
+  const handleSelectCity = (name: string) => {
+    onCitySearch(name);
+    setQuery("");
   };
 
   return (
@@ -56,10 +61,7 @@ const SearchBar = ({ onCitySearch }: SearchBarProps) => {
               {filteredCities.map((city) => (
                 <li
                   key={city.name}
-                  onClick={() => {
-                    onCitySearch(city.name);
-                    setQuery(""); 
-                  }}
+                  onClick={() => handleSelectCity(city.name)}
                   className="search-dropdown-item"
                 >
                   {city.name}
