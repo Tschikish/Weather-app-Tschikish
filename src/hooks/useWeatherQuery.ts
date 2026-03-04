@@ -28,7 +28,7 @@ const buildWeatherUrl = (latitude: number, longitude: number) => {
 async function fetchWeather(options: UseWeatherQueryOptions) {
   const { latitude, longitude } = options;
   const url = buildWeatherUrl(latitude, longitude);
-
+  console.log(url)
   const res = await fetch(url);
   if (!res.ok) {
     throw new Error("Failed to fetch weather data");

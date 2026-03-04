@@ -21,6 +21,9 @@ const App = () => {
   const { data: apiData, isLoading, error } = useWeatherQuery(coords);
   const weatherData = apiData ?? null;
 
+  //Delete
+  console.log(weatherData);
+
   const handleCitySearch = (cityName: string) => {
     const match = Cities.find(
       (c) => c.name.toLowerCase() === cityName.toLowerCase(),

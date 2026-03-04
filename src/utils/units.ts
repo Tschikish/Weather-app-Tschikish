@@ -44,7 +44,7 @@ export function convertPrecip(
 }
 
 export function tempUnitLabel(unit: TemperatureUnit): "°C" | "°F" {
-  return unit === "celsius" ? "°C" : "°F";
+  return unit === "celsius" ? "°" : "°";
 }
 
 export function windUnitLabel(unit: WindSpeedUnit): "km/h" | "mph" {

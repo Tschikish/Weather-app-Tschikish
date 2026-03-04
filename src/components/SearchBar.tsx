@@ -43,37 +43,40 @@ const SearchBar = ({ onCitySearch }: SearchBarProps) => {
   return (
     <form className="search" onSubmit={handleSubmit}>
       <div className="search-row shared-gap">
-        <div className="search-input-wrapper">
-          <span className="search-icon" aria-hidden="true">
-            🔍
-          </span>
+        <div className="search-input-flex-wrapper">
+          <div className="search-input-wrapper">
+            <span className="search-icon" aria-hidden="true">
+              🔍
+            </span>
 
-          <input
-            className="search-input"
-            type="text"
-            placeholder="Search for a place..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
+            <input
+              className="search-input"
+              type="text"
+              placeholder="Search for a place..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
 
-          {filteredCities.length > 0 && (
-            <ul className="search-dropdown">
-              {filteredCities.map((city) => (
-                <li
-                  key={city.name}
-                  onClick={() => handleSelectCity(city.name)}
-                  className="search-dropdown-item"
-                >
-                  {city.name}
-                </li>
-              ))}
-            </ul>
-          )}
+            {filteredCities.length > 0 && (
+              <ul className="search-dropdown">
+                {filteredCities.map((city) => (
+                  <li
+                    key={city.name}
+                    onClick={() => handleSelectCity(city.name)}
+                    className="search-dropdown-item"
+                  >
+                    {city.name}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
-
-        <button className="search-button" type="submit">
-          Search
-        </button>
+        <div className="search-button-flex-wrapper">
+          <button className="search-button" type="submit">
+            Search
+          </button>
+        </div>
       </div>
     </form>
   );
