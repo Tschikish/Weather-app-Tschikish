@@ -7,6 +7,8 @@ import type {
   PrecipitationUnit,
 } from "../utils/units";
 import { METRIC_UNIT_SETTINGS, IMPERIAL_UNIT_SETTINGS } from "../utils/units";
+import UnitsIcon from "../assets/images/icon-units.svg";
+import CheckIcon from "../assets/images/icon-checkmark.svg";
 
 type UnitsToggleProps = {
   mode: Units;
@@ -83,6 +85,9 @@ const UnitsToggle = ({
         aria-expanded={isOpen}
         onClick={toggleDropdown}
       >
+        <span>
+          <img src={UnitsIcon} alt="Unit-toggle-button" />
+        </span>
         <span>Units</span>
         <span className="units-toggle__chevron" aria-hidden="true">
           ▾
@@ -113,9 +118,12 @@ const UnitsToggle = ({
               >
                 <span>Celsius (°C)</span>
                 {temperature === "celsius" && (
-                  <span className="units-toggle__check">✓</span>
+                  <span className="units-toggle__check">
+                    <img src={CheckIcon} alt="check-icon" />
+                  </span>
                 )}
               </button>
+
               <button
                 type="button"
                 className={`units-toggle__option ${
@@ -125,7 +133,9 @@ const UnitsToggle = ({
               >
                 <span>Fahrenheit (°F)</span>
                 {temperature === "fahrenheit" && (
-                  <span className="units-toggle__check">✓</span>
+                  <span className="units-toggle__check">
+                    <img src={CheckIcon} alt="check-icon" />
+                  </span>
                 )}
               </button>
             </div>
@@ -143,11 +153,14 @@ const UnitsToggle = ({
                 }`}
                 onClick={() => selectWindSpeed("kmh")}
               >
-                <span>Kilometers per hour (km/h)</span>
+                <span>km/h</span>
                 {windSpeed === "kmh" && (
-                  <span className="units-toggle__check">✓</span>
+                  <span className="units-toggle__check">
+                    <img src={CheckIcon} alt="check-icon" />
+                  </span>
                 )}
               </button>
+
               <button
                 type="button"
                 className={`units-toggle__option ${
@@ -155,9 +168,11 @@ const UnitsToggle = ({
                 }`}
                 onClick={() => selectWindSpeed("mph")}
               >
-                <span>Miles per hour (mph)</span>
+                <span>mph</span>
                 {windSpeed === "mph" && (
-                  <span className="units-toggle__check">✓</span>
+                  <span className="units-toggle__check">
+                    <img src={CheckIcon} alt="check-icon" />
+                  </span>
                 )}
               </button>
             </div>
@@ -177,9 +192,12 @@ const UnitsToggle = ({
               >
                 <span>Millimeters (mm)</span>
                 {precipitation === "mm" && (
-                  <span className="units-toggle__check">✓</span>
+                  <span className="units-toggle__check">
+                    <img src={CheckIcon} alt="check-icon" />
+                  </span>
                 )}
               </button>
+
               <button
                 type="button"
                 className={`units-toggle__option ${
@@ -189,7 +207,9 @@ const UnitsToggle = ({
               >
                 <span>Inches (in)</span>
                 {precipitation === "inch" && (
-                  <span className="units-toggle__check">✓</span>
+                  <span className="units-toggle__check">
+                    <img src={CheckIcon} alt="check-icon" />
+                  </span>
                 )}
               </button>
             </div>
