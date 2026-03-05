@@ -92,6 +92,7 @@
 
 .units-toggle__section:last-child {
   margin-bottom: 0;
+  padding-bottom: 0.5rem;
 }
 
 .units-toggle__section-title {
@@ -114,6 +115,7 @@
 }
 
 .units-toggle__dropdown button {
+  font-family: "DM Sans", sans-serif;
   width: 100%;
   background: transparent;
   border: none;
@@ -123,6 +125,7 @@
   border-radius: 6px;
   cursor: pointer;
   font-weight: 100;
+
 }
 
 .units-toggle__dropdown h3 {
