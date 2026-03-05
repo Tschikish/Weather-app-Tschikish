@@ -67,8 +67,7 @@ const HourlyForecast = ({ data, units }: HourlyForecastProps) => {
 
     return times.slice(0, 24).map((isoString, index) => {
       const date = new Date(isoString);
-      const rawC =
-        typeof tempsC[index] === "number" ? tempsC[index] : null;
+      const rawC = typeof tempsC[index] === "number" ? tempsC[index] : null;
       const converted =
         rawC !== null ? Math.round(convertTemp(rawC, units.temperature)) : null;
 

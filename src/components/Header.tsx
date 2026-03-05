@@ -2,6 +2,7 @@ import SearchBar from "./SearchBar";
 import UnitsToggle from "./UnitsToggle";
 import type { Units } from "../hooks/useWeatherQuery";
 import type { UnitSettings } from "../utils/units";
+import Logo from "../assets/images/logo.svg";
 
 type HeaderProps = {
   onCitySearch: (city: string) => void;
@@ -22,7 +23,7 @@ const Header = ({
     <header className="header">
       <div className="header-top">
         <div className="logo">
-          <span className="logo-icon" aria-hidden="true" />
+          <img src={Logo} alt="Logo" />
         </div>
 
         <UnitsToggle

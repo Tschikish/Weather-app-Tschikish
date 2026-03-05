@@ -28,11 +28,14 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+body {
+  overflow-y: hidden;
+}
 html,
 body,
 #root {
   height: 100dvh;
+  font-family: "DM Sans", sans-serif;
 }
 
 body {
