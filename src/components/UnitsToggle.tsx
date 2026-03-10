@@ -94,128 +94,129 @@ const UnitsToggle = ({
         </span>
       </button>
 
-      {isOpen && (
-        <div className="units-toggle__dropdown">
-          <button
-            type="button"
-            className="units-toggle__mode-button"
-            onClick={handleModeToggle}
-          >
-            {mode === "metric" ? "Switch to Imperial" : "Switch to Metric"}
-          </button>
+      <div
+        className={`units-toggle__dropdown ${isOpen ? "is-open" : ""}`}
+        aria-hidden={!isOpen}
+      >
+        <button
+          type="button"
+          className="units-toggle__mode-button"
+          onClick={handleModeToggle}
+        >
+          {mode === "metric" ? "Switch to Imperial" : "Switch to Metric"}
+        </button>
 
-          <div className="units-toggle__section">
-            <div className="units-toggle__section-header">
-              <h3>Temperature</h3>
-            </div>
-            <div className="units-toggle__options">
-              <button
-                type="button"
-                className={`units-toggle__option ${
-                  temperature === "celsius" ? "is-selected" : ""
-                }`}
-                onClick={() => selectTemperature("celsius")}
-              >
-                <span>Celsius (°C)</span>
-                {temperature === "celsius" && (
-                  <span className="units-toggle__check">
-                    <img src={CheckIcon} alt="check-icon" />
-                  </span>
-                )}
-              </button>
-
-              <button
-                type="button"
-                className={`units-toggle__option ${
-                  temperature === "fahrenheit" ? "is-selected" : ""
-                }`}
-                onClick={() => selectTemperature("fahrenheit")}
-              >
-                <span>Fahrenheit (°F)</span>
-                {temperature === "fahrenheit" && (
-                  <span className="units-toggle__check">
-                    <img src={CheckIcon} alt="check-icon" />
-                  </span>
-                )}
-              </button>
-            </div>
+        <div className="units-toggle__section">
+          <div className="units-toggle__section-header">
+            <h3>Temperature</h3>
           </div>
+          <div className="units-toggle__options">
+            <button
+              type="button"
+              className={`units-toggle__option ${
+                temperature === "celsius" ? "is-selected" : ""
+              }`}
+              onClick={() => selectTemperature("celsius")}
+            >
+              <span>Celsius (°C)</span>
+              {temperature === "celsius" && (
+                <span className="units-toggle__check">
+                  <img src={CheckIcon} alt="check-icon" />
+                </span>
+              )}
+            </button>
 
-          <div className="units-toggle__section">
-            <div className="units-toggle__section-header">
-              <h3>Wind speed</h3>
-            </div>
-            <div className="units-toggle__options">
-              <button
-                type="button"
-                className={`units-toggle__option ${
-                  windSpeed === "kmh" ? "is-selected" : ""
-                }`}
-                onClick={() => selectWindSpeed("kmh")}
-              >
-                <span>km/h</span>
-                {windSpeed === "kmh" && (
-                  <span className="units-toggle__check">
-                    <img src={CheckIcon} alt="check-icon" />
-                  </span>
-                )}
-              </button>
-
-              <button
-                type="button"
-                className={`units-toggle__option ${
-                  windSpeed === "mph" ? "is-selected" : ""
-                }`}
-                onClick={() => selectWindSpeed("mph")}
-              >
-                <span>mph</span>
-                {windSpeed === "mph" && (
-                  <span className="units-toggle__check">
-                    <img src={CheckIcon} alt="check-icon" />
-                  </span>
-                )}
-              </button>
-            </div>
-          </div>
-
-          <div className="units-toggle__section">
-            <div className="units-toggle__section-header">
-              <h3>Precipitation</h3>
-            </div>
-            <div className="units-toggle__options">
-              <button
-                type="button"
-                className={`units-toggle__option ${
-                  precipitation === "mm" ? "is-selected" : ""
-                }`}
-                onClick={() => selectPrecipitation("mm")}
-              >
-                <span>Millimeters (mm)</span>
-                {precipitation === "mm" && (
-                  <span className="units-toggle__check">
-                    <img src={CheckIcon} alt="check-icon" />
-                  </span>
-                )}
-              </button>
-
-              <button
-                type="button"
-                className={`units-toggle__option ${
-                  precipitation === "inch" ? "is-selected" : ""
-                }`}
-                onClick={() => selectPrecipitation("inch")}
-              >
-                <span>Inches (in)</span>
-                {precipitation === "inch" && (
-                  <span className="units-toggle__check">
-                    <img src={CheckIcon} alt="check-icon" />
-                  </span>
-                )}
-              </button>
-            </div>
+            <button
+              type="button"
+              className={`units-toggle__option ${
+                temperature === "fahrenheit" ? "is-selected" : ""
+              }`}
+              onClick={() => selectTemperature("fahrenheit")}
+            >
+              <span>Fahrenheit (°F)</span>
+              {temperature === "fahrenheit" && (
+                <span className="units-toggle__check">
+                  <img src={CheckIcon} alt="check-icon" />
+                </span>
+              )}
+            </button>
           </div>
         </div>
-      )}
+
+        <div className="units-toggle__section">
+          <div className="units-toggle__section-header">
+            <h3>Wind speed</h3>
+          </div>
+          <div className="units-toggle__options">
+            <button
+              type="button"
+              className={`units-toggle__option ${
+                windSpeed === "kmh" ? "is-selected" : ""
+              }`}
+              onClick={() => selectWindSpeed("kmh")}
+            >
+              <span>km/h</span>
+              {windSpeed === "kmh" && (
+                <span className="units-toggle__check">
+                  <img src={CheckIcon} alt="check-icon" />
+                </span>
+              )}
+            </button>
+
+            <button
+              type="button"
+              className={`units-toggle__option ${
+                windSpeed === "mph" ? "is-selected" : ""
+              }`}
+              onClick={() => selectWindSpeed("mph")}
+            >
+              <span>mph</span>
+              {windSpeed === "mph" && (
+                <span className="units-toggle__check">
+                  <img src={CheckIcon} alt="check-icon" />
+                </span>
+              )}
+            </button>
+          </div>
+        </div>
+
+        <div className="units-toggle__section">
+          <div className="units-toggle__section-header">
+            <h3>Precipitation</h3>
+          </div>
+          <div className="units-toggle__options">
+            <button
+              type="button"
+              className={`units-toggle__option ${
+                precipitation === "mm" ? "is-selected" : ""
+              }`}
+              onClick={() => selectPrecipitation("mm")}
+            >
+              <span>Millimeters (mm)</span>
+              {precipitation === "mm" && (
+                <span className="units-toggle__check">
+                  <img src={CheckIcon} alt="check-icon" />
+                </span>
+              )}
+            </button>
+
+            <button
+              type="button"
+              className={`units-toggle__option ${
+                precipitation === "inch" ? "is-selected" : ""
+              }`}
+              onClick={() => selectPrecipitation("inch")}
+            >
+              <span>Inches (in)</span>
+              {precipitation === "inch" && (
+                <span className="units-toggle__check">
+                  <img src={CheckIcon} alt="check-icon" />
+                </span>
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

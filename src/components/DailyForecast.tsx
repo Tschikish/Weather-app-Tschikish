@@ -71,7 +71,7 @@ const DailyForecast = ({ data, units }: DailyForecastProps) => {
           <article className="daily-forecast__item" key={d.date}>
             <p className="daily-forecast__day">{d.day}</p>
             <div className="daily-forecast__icon" aria-hidden="true">
-              <img src={iconFromCode(d.code)} alt="" />
+              <img className="" src={iconFromCode(d.code)} alt="" />
             </div>
             <p className="daily-forecast__temps">
               <span>

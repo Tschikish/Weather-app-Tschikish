@@ -10,10 +10,12 @@
 
 .content-row {
   align-items: flex-start;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--layout-right-col);
+  column-gap: var(--layout-gap);
 }
 
 .content-main {
-  flex: 1;
   height: 100%;
   display: flex;
   flex-direction: column;

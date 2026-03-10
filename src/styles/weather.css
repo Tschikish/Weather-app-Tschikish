@@ -68,7 +68,7 @@
 
 .units-toggle__dropdown {
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + 0.5rem);
   right: 0;
   width: 12rem;
   background: var(--neutral-800);
@@ -76,6 +76,21 @@
   padding: 0.5rem 0.5rem 0.5rem;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
   z-index: 1000;
+
+  opacity: 0;
+  transform: translateY(-8px);
+  transition:
+    opacity 250ms ease,
+    transform 400ms ease;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.units-toggle__dropdown.is-open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  visibility: visible;
 }
 
 .units-toggle__section {
@@ -104,7 +119,7 @@
 .units-toggle__option {
   background: transparent;
   border: none;
-  padding: 6px 4px;
+  padding: 0.375rem 0.25rem;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -115,7 +130,7 @@
 }
 
 .units-toggle__dropdown button {
-  font-family: "DM Sans", sans-serif;
+  font-family: inherit;
   width: 100%;
   background: transparent;
   border: none;
@@ -124,12 +139,11 @@
   padding: 6px 8px;
   border-radius: 6px;
   cursor: pointer;
-  font-weight: 100;
-
+  font-weight: 400;
 }
 
 .units-toggle__dropdown h3 {
-  font-size: .75rem;
+  font-size: 0.75rem;
   color: var(--neutral-300);
   font-weight: 600;
   padding-left: 0.5rem;
@@ -176,13 +190,6 @@
 
 .content-sidebar {
   height: 100%;
-}
-
-.content-row {
-  height: 36.5rem;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--layout-right-col);
-  column-gap: var(--layout-gap);
 }
 
 .search-input-flex-wrapper {
@@ -237,7 +244,8 @@
 
 .search-icon {
   margin-right: 10px;
-  opacity: 0.6;
+  opacity: 1;
+  margin-top: 0.4rem;
 }
 
 .search-input {
@@ -276,7 +284,7 @@ search-button-flex-wrapper {
 .weather-main-card {
   background: linear-gradient(135deg, #4f67ff 0%, #6a5cff 100%);
   border-radius: 20px;
-  padding: 4.75rem 20px;
+  padding: 3.5rem 20px;
   margin-bottom: 24px;
   position: relative;
   overflow: hidden;
@@ -375,8 +383,8 @@ search-button-flex-wrapper {
 }
 
 .daily-forecast__icon img {
-  width: 24px;
-  height: 24px;
+  width: 3rem;
+  height: 3rem;
 }
 
 .hourly-forecast {
@@ -472,9 +480,21 @@ search-button-flex-wrapper {
   padding: 14px 16px;
   border-radius: 12px;
   margin: 0 12px;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
+}
+
+.hourly-forecast__time{
+  justify-self: start;
+}
+
+.hourly-forecast__icon{
+  justify-self: center;
+}
+
+.hourly-forecast__temp {
+  justify-self: end;
 }
 
 @media (max-width: 900px) {

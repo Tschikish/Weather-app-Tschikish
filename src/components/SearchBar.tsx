@@ -1,6 +1,7 @@
 import { FormEvent, useState, useMemo } from "react";
 import { useDebounce } from "../hooks/useDebounce";
 import { Cities } from "../data/cities";
+import SearchIcon from "../assets/images/icon-search.svg"
 
 type SearchBarProps = {
   onCitySearch: (city: string) => void;
@@ -45,7 +46,7 @@ const SearchBar = ({ onCitySearch }: SearchBarProps) => {
       <div className="search-row">
         <div className="search-input-wrapper">
           <span className="search-icon" aria-hidden="true">
-            🔍
+            <img src={SearchIcon} alt=""  />
           </span>
 
           <input

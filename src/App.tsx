@@ -16,6 +16,7 @@ const App = () => {
   const [units, setUnits] = useState<Units>("metric");
   const [unitSettings, setUnitSettings] =
     useState<UnitSettings>(METRIC_UNIT_SETTINGS);
+
   const [coords, setCoords] = useState<UseWeatherQueryOptions | null>(null);
 
   const { data: apiData, isLoading, error } = useWeatherQuery(coords);
@@ -63,9 +64,6 @@ const App = () => {
           </aside>
         </div>
 
-        {isLoading && !weatherData && (
-          <p style={{ marginTop: "16px" }}>Loading weather…</p>
-        )}
         {error && (
           <p style={{ marginTop: "16px", color: "#f66" }}>
             Failed to load weather data.

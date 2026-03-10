@@ -7,6 +7,9 @@ export interface UseWeatherQueryOptions {
   longitude: number;
 }
 
+const sleep = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, Math.random() * ms));
+
 const buildWeatherUrl = (latitude: number, longitude: number) => {
   const searchParams = new URLSearchParams({
     latitude: latitude.toString(),
@@ -28,13 +31,15 @@ const buildWeatherUrl = (latitude: number, longitude: number) => {
 async function fetchWeather(options: UseWeatherQueryOptions) {
   const { latitude, longitude } = options;
   const url = buildWeatherUrl(latitude, longitude);
-  console.log(url)
+  console.log(url);
+  await sleep(1000);
   const res = await fetch(url);
   if (!res.ok) {
     throw new Error("Failed to fetch weather data");
   }
 
   const data = await res.json();
+
   return data;
 }
 
