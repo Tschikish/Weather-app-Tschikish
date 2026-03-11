@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import { tempUnitLabel, convertTemp, type UnitSettings } from "../utils/units";
+import DropDownIcon from "../assets/images/icon-dropdown.svg";
 import sunny from "../assets/images/icon-sunny.webp";
 import partlyCloudy from "../assets/images/icon-partly-cloudy.webp";
 import overcast from "../assets/images/icon-overcast.webp";
@@ -27,7 +28,9 @@ type DayOption = {
 
 const FORECAST_DAYS_COUNT = 7;
 
-const iconFromCode = (code: number) => {
+const iconFromCode = (code: number | null | undefined) => {
+  if (typeof code !== "number") return sunny;
+
   if (code === 0) return sunny;
   if ([1, 2].includes(code)) return partlyCloudy;
   if (code === 3) return overcast;
@@ -97,7 +100,7 @@ const HourlyForecast = ({ data, units }: HourlyForecastProps) => {
   const fallbackDayOptions = useMemo(() => buildFallbackDayOptions(), []);
   const fallbackCurrentDayKey = fallbackDayOptions[0]?.key ?? "";
   const [selectedDayKey, setSelectedDayKey] = useState<string>(
-    fallbackCurrentDayKey
+    fallbackCurrentDayKey,
   );
 
   const unitLabel = tempUnitLabel(units.temperature);
@@ -107,7 +110,10 @@ const HourlyForecast = ({ data, units }: HourlyForecastProps) => {
   const { dayOptions, hoursByDay } = useMemo(() => {
     const times: string[] | undefined = data?.hourly?.time;
     const tempsC: number[] | undefined = data?.hourly?.temperature_2m;
-    const weatherCodes: number[] | undefined = data?.hourly?.weather_code;
+    const weatherCodes =
+      data?.hourly?.weather_code ??
+      data?.hourly?.weathercode ??
+      data?.hourly?.weatherCode;
 
     const formatter = new Intl.DateTimeFormat("en-US", {
       hour: "numeric",
@@ -115,7 +121,10 @@ const HourlyForecast = ({ data, units }: HourlyForecastProps) => {
     });
 
     const fallbackHoursByDay = Object.fromEntries(
-      fallbackDayOptions.map((day) => [day.key, buildFallbackHoursForDay(day.key)])
+      fallbackDayOptions.map((day) => [
+        day.key,
+        buildFallbackHoursForDay(day.key),
+      ]),
     ) as Record<string, HourEntry[]>;
 
     if (!Array.isArray(times) || !Array.isArray(tempsC)) {
@@ -217,7 +226,7 @@ const HourlyForecast = ({ data, units }: HourlyForecastProps) => {
           >
             <span>{selectedDayLabel}</span>
             <span className="hourly-forecast__chevron" aria-hidden="true">
-              ▾
+              <img src={DropDownIcon} alt=""/>
             </span>
           </button>
 
@@ -246,24 +255,26 @@ const HourlyForecast = ({ data, units }: HourlyForecastProps) => {
       <ul className="hourly-forecast__list">
         {hours.map((hour, index) => (
           <li key={index} className="hourly-forecast__item">
-            <div className="hourly-forecast__time">{hour.label}</div>
-
-            <div className="hourly-forecast__icon" aria-hidden="true">
-              {hour.weatherCode !== null ? (
-                <img
-                  src={iconFromCode(hour.weatherCode)}
-                  alt=""
-                  aria-hidden="true"
-                />
-              ) : (
-                "–"
-              )}
+            <div className="hourly-forecast__left">
+              <div className="hourly-forecast__icon" aria-hidden="true">
+                {hour.weatherCode !== null ? (
+                  <img
+                    src={iconFromCode(hour.weatherCode)}
+                    alt=""
+                    aria-hidden="true"
+                  />
+                ) : (
+                  "–"
+                )}
+              </div>
+              <div className="hourly-forecast__time">{hour.label}</div>
             </div>
-
-            <div className="hourly-forecast__temp">
-              {hour.temp !== null
-                ? `${hour.temp}${unitLabel}`
-                : `–${unitLabel}`}
+            <div className="hourly-forecast__right">
+              <div className="hourly-forecast__temp">
+                {hour.temp !== null
+                  ? `${hour.temp}${unitLabel}`
+                  : `–${unitLabel}`}
+              </div>
             </div>
           </li>
         ))}

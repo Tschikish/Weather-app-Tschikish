@@ -43,7 +43,7 @@ export function convertPrecip(
   return valueMm / 25.4;
 }
 
-export function tempUnitLabel(unit: TemperatureUnit): "°C" | "°F" {
+export function tempUnitLabel(unit: TemperatureUnit): "°" | "°" {
   return unit === "celsius" ? "°" : "°";
 }
 

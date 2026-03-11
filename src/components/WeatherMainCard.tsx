@@ -4,9 +4,36 @@ import { convertTemp, tempUnitLabel, type UnitSettings } from "../utils/units";
 type WeatherMainCardProps = {
   data: any;
   units: UnitSettings;
+  loading: boolean;
 };
 
-const WeatherMainCard = ({ data, units }: WeatherMainCardProps) => {
+const WeatherMainCard = ({ data, units, loading }: WeatherMainCardProps) => {
+  if (loading) {
+    return (
+      <section
+        className="weather-main-card weather-main-card--loading"
+        style={{ backgroundImage: `url(${bgImageLRG})` }}
+      >
+        <div className="weather-main-card__body">
+          <div className="weather-main-card__location">
+            <p className="weather-main-card__city">&nbsp;</p>
+            <p className="weather-main-card__date">&nbsp;</p>
+          </div>
+
+          <div className="weather-main-card__summary">
+            <div className="weather-main-card__icon" />
+            <p className="weather-main-card__temp">
+              <span className="weather-main-card__temp-value">&nbsp;</span>
+              <span className="weather-main-card__temp-unit">&nbsp;</span>
+            </p>
+          </div>
+        </div>
+
+        <div className="weather-main-card__loader">Loading...</div>
+      </section>
+    );
+  }
+
   if (!data) {
     const unitLabel = tempUnitLabel(units.temperature);
 
@@ -27,9 +54,7 @@ const WeatherMainCard = ({ data, units }: WeatherMainCardProps) => {
             </div>
             <p className="weather-main-card__temp">
               <span className="weather-main-card__temp-value">–</span>
-              <span className="weather-main-card__temp-unit">
-                {unitLabel}
-              </span>
+              <span className="weather-main-card__temp-unit">{unitLabel}</span>
             </p>
           </div>
         </div>

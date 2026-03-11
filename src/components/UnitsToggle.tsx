@@ -9,6 +9,8 @@ import type {
 import { METRIC_UNIT_SETTINGS, IMPERIAL_UNIT_SETTINGS } from "../utils/units";
 import UnitsIcon from "../assets/images/icon-units.svg";
 import CheckIcon from "../assets/images/icon-checkmark.svg";
+import DropdownIcon from "../assets/images/icon-dropdown.svg";
+
 
 type UnitsToggleProps = {
   mode: Units;
@@ -90,7 +92,7 @@ const UnitsToggle = ({
         </span>
         <span>Units</span>
         <span className="units-toggle__chevron" aria-hidden="true">
-          ▾
+          <img src={DropdownIcon} style={{ width: 10, height: 10 }} />
         </span>
       </button>
 

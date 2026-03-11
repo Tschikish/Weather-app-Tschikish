@@ -37,7 +37,7 @@ async function fetchWeather(options: UseWeatherQueryOptions) {
   if (!res.ok) {
     throw new Error("Failed to fetch weather data");
   }
-
+  console.log(url)
   const data = await res.json();
 
   return data;

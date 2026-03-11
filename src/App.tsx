@@ -54,7 +54,7 @@ const App = () => {
       <main className="page-main">
         <div className="content-row">
           <section className="content-main">
-            <WeatherMainCard data={weatherData} units={unitSettings} />
+            <WeatherMainCard data={weatherData} units={unitSettings} loading={isLoading}/>
             <Stats data={weatherData} units={unitSettings} />
             <DailyForecast data={weatherData} units={unitSettings} />
           </section>
