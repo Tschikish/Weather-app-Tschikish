@@ -519,6 +519,7 @@ search-button-flex-wrapper {
 
 .hourly-forecast__item {
   background: var(--neutral-700);
+  min-height: 48px;
   padding: 0.5rem 1rem;
   border-radius: 0.4rem;
   margin: 0 12px;

@@ -13,6 +13,13 @@ import { Cities } from "./data/cities";
 import { METRIC_UNIT_SETTINGS, type UnitSettings } from "./utils/units";
 
 const App = () => {
+  const [selectedCity, setSelectedCity] = useState<{
+    name: string;
+    country: string;
+    lat: number;
+    lng: number;
+  } | null>(null);
+
   const [units, setUnits] = useState<Units>("metric");
   const [unitSettings, setUnitSettings] =
     useState<UnitSettings>(METRIC_UNIT_SETTINGS);
@@ -54,7 +61,11 @@ const App = () => {
       <main className="page-main">
         <div className="content-row">
           <section className="content-main">
-            <WeatherMainCard data={weatherData} units={unitSettings} loading={isLoading}/>
+            <WeatherMainCard
+              data={weatherData}
+              units={unitSettings}
+              loading={isLoading}
+            />
             <Stats data={weatherData} units={unitSettings} />
             <DailyForecast data={weatherData} units={unitSettings} />
           </section>

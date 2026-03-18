@@ -264,7 +264,11 @@ const HourlyForecast = ({ data, units }: HourlyForecastProps) => {
                     aria-hidden="true"
                   />
                 ) : (
-                  "–"
+                  <img
+                    src={sunny}
+                    alt=""
+                    aria-hidden="true"
+                  />
                 )}
               </div>
               <div className="hourly-forecast__time">{hour.label}</div>
