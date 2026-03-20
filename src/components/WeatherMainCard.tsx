@@ -1,5 +1,13 @@
 import bgImageLRG from "../assets/images/bg-today-large.svg";
 import { convertTemp, tempUnitLabel, type UnitSettings } from "../utils/units";
+import sunny from "../assets/images/icon-sunny.webp";
+import partlyCloudy from "../assets/images/icon-partly-cloudy.webp";
+import overcast from "../assets/images/icon-overcast.webp";
+import drizzle from "../assets/images/icon-drizzle.webp";
+import rain from "../assets/images/icon-rain.webp";
+import snow from "../assets/images/icon-snow.webp";
+import fog from "../assets/images/icon-fog.webp";
+import storm from "../assets/images/icon-storm.webp";
 
 type WeatherMainCardProps = {
   data: any;
@@ -7,7 +15,24 @@ type WeatherMainCardProps = {
   loading: boolean;
 };
 
+const iconFromCode = (code: number | null | undefined) => {
+  if (typeof code !== "number") return sunny;
+
+  if (code === 0) return sunny;
+  if ([1, 2].includes(code)) return partlyCloudy;
+  if (code === 3) return overcast;
+  if ([45, 48].includes(code)) return fog;
+  if ([51, 53, 55].includes(code)) return drizzle;
+  if ([61, 63, 65, 80, 81, 82].includes(code)) return rain;
+  if ([71, 73, 75, 85, 86].includes(code)) return snow;
+  if ([95, 96, 99].includes(code)) return storm;
+
+  return sunny;
+};
+
 const WeatherMainCard = ({ data, units, loading }: WeatherMainCardProps) => {
+  console.log(data);
+
   if (loading) {
     return (
       <section
@@ -29,7 +54,14 @@ const WeatherMainCard = ({ data, units, loading }: WeatherMainCardProps) => {
           </div>
         </div>
 
-        <div className="weather-main-card__loader">Loading...</div>
+        <div className="weather-main-card__loader" aria-label="Loading">
+          <div className="weather-main-card__loader-dots" aria-hidden="true">
+            <span className="weather-main-card__loader-dot" />
+            <span className="weather-main-card__loader-dot" />
+            <span className="weather-main-card__loader-dot" />
+          </div>
+          <p className="weather-main-card__loader-text">Loading</p>
+        </div>
       </section>
     );
   }
@@ -49,9 +81,6 @@ const WeatherMainCard = ({ data, units, loading }: WeatherMainCardProps) => {
           </div>
 
           <div className="weather-main-card__summary">
-            <div className="weather-main-card__icon" aria-hidden="true">
-              ☀️
-            </div>
             <p className="weather-main-card__temp">
               <span className="weather-main-card__temp-value">–</span>
               <span className="weather-main-card__temp-unit">{unitLabel}</span>
@@ -65,6 +94,7 @@ const WeatherMainCard = ({ data, units, loading }: WeatherMainCardProps) => {
   const hourlyTemps: number[] | undefined = data?.hourly?.temperature_2m;
   const dailyMax: number[] | undefined = data?.daily?.temperature_2m_max;
   const dailyTimes: string[] | undefined = data?.daily?.time;
+  const iconCode: number | undefined = data?.daily?.weathercode[0];
 
   let rawTempC = 0;
   if (Array.isArray(hourlyTemps) && hourlyTemps.length > 0) {
@@ -99,7 +129,7 @@ const WeatherMainCard = ({ data, units, loading }: WeatherMainCardProps) => {
 
         <div className="weather-main-card__summary">
           <div className="weather-main-card__icon" aria-hidden="true">
-            ☀️
+            <img src={iconFromCode(iconCode)} alt="" />
           </div>
           <p className="weather-main-card__temp">
             <span className="weather-main-card__temp-value">

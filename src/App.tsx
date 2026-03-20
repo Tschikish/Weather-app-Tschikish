@@ -24,13 +24,13 @@ const App = () => {
   const [unitSettings, setUnitSettings] =
     useState<UnitSettings>(METRIC_UNIT_SETTINGS);
 
-  const [coords, setCoords] = useState<UseWeatherQueryOptions | null>(null);
+  const [coords, setCoords] = useState<UseWeatherQueryOptions | null>({
+    latitude: 44.80401,
+    longitude: 20.46513,
+  });
 
   const { data: apiData, isLoading, error } = useWeatherQuery(coords);
   const weatherData = apiData ?? null;
-
-  //Delete
-  console.log(weatherData);
 
   const handleCitySearch = (cityName: string) => {
     const match = Cities.find(
