@@ -1,29 +1,27 @@
 import { useState } from "react";
-
 import Header from "./components/Header";
 import WeatherMainCard from "./components/WeatherMainCard";
 import Stats from "./components/Stats";
 import DailyForecast from "./components/DailyForecast";
 import HourlyForecast from "./components/HourlyForecast";
-
 import { useWeatherQuery } from "./hooks/useWeatherQuery";
 import type { UseWeatherQueryOptions, Units } from "./hooks/useWeatherQuery";
 import { Cities } from "./data/cities";
-
 import { METRIC_UNIT_SETTINGS, type UnitSettings } from "./utils/units";
 
+export type CityData = {
+  name: string;
+  country: string;
+};
+
 const App = () => {
-  const [selectedCity, setSelectedCity] = useState<{
-    name: string;
-    country: string;
-    lat: number;
-    lng: number;
-  } | null>(null);
+  const [selectedCity, setSelectedCity] = useState<CityData | null>(null);
 
   const [units, setUnits] = useState<Units>("metric");
   const [unitSettings, setUnitSettings] =
     useState<UnitSettings>(METRIC_UNIT_SETTINGS);
 
+  //Setting the base for Belgrade
   const [coords, setCoords] = useState<UseWeatherQueryOptions | null>({
     latitude: 44.80401,
     longitude: 20.46513,
@@ -41,6 +39,8 @@ const App = () => {
       console.warn("City not found in Cities array:", cityName);
       return;
     }
+
+    setSelectedCity(match);
 
     setCoords({
       latitude: match.lat,
@@ -65,6 +65,7 @@ const App = () => {
               data={weatherData}
               units={unitSettings}
               loading={isLoading}
+              city={selectedCity}
             />
             <Stats data={weatherData} units={unitSettings} />
             <DailyForecast data={weatherData} units={unitSettings} />

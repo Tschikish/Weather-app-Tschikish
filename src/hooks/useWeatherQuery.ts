@@ -9,8 +9,8 @@ export interface UseWeatherQueryOptions {
 
 const sleep = (ms: number) => {
   const randoValue = Math.random() * ms;
-  console.log("U random upadosmo " + randoValue);
-  new Promise((resolve) => setTimeout(resolve, randoValue));
+  // console.log("U random upadosmo " + randoValue);
+  return new Promise((resolve) => setTimeout(resolve, randoValue));
 };
 
 const buildWeatherUrl = (latitude: number, longitude: number) => {
@@ -37,7 +37,7 @@ async function fetchWeather(options: UseWeatherQueryOptions) {
   console.log(url);
 
   // Simulates loading behavior since data is sourced from a static JSON file instead of an API
-  await sleep(10000);
+  await sleep(300022);
 
   const res = await fetch(url);
   if (!res.ok) {

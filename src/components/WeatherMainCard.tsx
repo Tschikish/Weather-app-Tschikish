@@ -1,5 +1,6 @@
 import bgImageLRG from "../assets/images/bg-today-large.svg";
 import { convertTemp, tempUnitLabel, type UnitSettings } from "../utils/units";
+import type { CityData } from "../App";
 import sunny from "../assets/images/icon-sunny.webp";
 import partlyCloudy from "../assets/images/icon-partly-cloudy.webp";
 import overcast from "../assets/images/icon-overcast.webp";
@@ -13,6 +14,7 @@ type WeatherMainCardProps = {
   data: any;
   units: UnitSettings;
   loading: boolean;
+  city: CityData | null;
 };
 
 const iconFromCode = (code: number | null | undefined) => {
@@ -30,14 +32,19 @@ const iconFromCode = (code: number | null | undefined) => {
   return sunny;
 };
 
-const WeatherMainCard = ({ data, units, loading }: WeatherMainCardProps) => {
+const WeatherMainCard = ({
+  data,
+  units,
+  loading,
+  city,
+}: WeatherMainCardProps) => {
   console.log(data);
 
   if (loading) {
     return (
       <section
-        className="weather-main-card weather-main-card--loading"
-        style={{ backgroundImage: `url(${bgImageLRG})` }}
+        className="weather-main-card"
+        // style={{ backgroundImage: `url(${bgImageLRG})` }}
       >
         <div className="weather-main-card__body">
           <div className="weather-main-card__location">
@@ -123,8 +130,16 @@ const WeatherMainCard = ({ data, units, loading }: WeatherMainCardProps) => {
     >
       <div className="weather-main-card__body">
         <div className="weather-main-card__location">
-          <p className="weather-main-card__city">Current location</p>
-          <p className="weather-main-card__date">{dateLabel}</p>
+          <p
+            key={city?.name}
+            className="weather-main-card__city weather-main-card__city--enter"
+          >
+            {city ? city.name + ", " : "Select a city"}
+            {city ? city.country : ""}
+          </p>
+          <p className="weather-main-card__date weather-main-card__date--enter">
+            {dateLabel}
+          </p>
         </div>
 
         <div className="weather-main-card__summary">
