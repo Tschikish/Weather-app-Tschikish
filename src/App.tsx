@@ -15,7 +15,10 @@ export type CityData = {
 };
 
 const App = () => {
-  const [selectedCity, setSelectedCity] = useState<CityData | null>(null);
+  const [selectedCity, setSelectedCity] = useState<CityData | null>({
+    name: "Belgrade",
+    country: "Serbia",
+  });
 
   const [units, setUnits] = useState<Units>("metric");
   const [unitSettings, setUnitSettings] =

@@ -369,6 +369,7 @@ search-button-flex-wrapper {
 .weather-main-card__city {
     font-size: 1.5rem;
     font-weight: 600;
+    word-break: normal;
 }
 
 .weather-main-card__city--enter {
@@ -501,6 +502,25 @@ search-button-flex-wrapper {
     height: 65%;
     border-radius: 999px;
     background: linear-gradient(
+        45deg,
+        rgba(120, 160, 255, 0.05) 0%,
+        rgba(120, 160, 255, 0.18) 50%,
+        rgba(120, 160, 255, 0.05) 100%
+    );
+    background-size: 200% 100%;
+    animation: statsValueShimmer 2s linear infinite;
+}
+
+/*.weather-stat-card--loading .weather-stat-card__value::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 90%;
+    height: 65%;
+    border-radius: 999px;
+    background: linear-gradient(
         90deg,
         rgba(255, 255, 255, 0.06) 0%,
         rgba(255, 255, 255, 0.16) 50%,
@@ -508,7 +528,7 @@ search-button-flex-wrapper {
     );
     background-size: 200% 100%;
     animation: statsValueShimmer 1.2s linear infinite;
-}
+}*/
 
 @keyframes statsCardFadeUp {
     from {
@@ -745,5 +765,14 @@ search-button-flex-wrapper {
 
     .header-title h1 {
         font-size: 40px;
+    }
+
+    .search-input-wrapper {
+        max-width: none;
+    }
+
+    .search-button {
+        width: 100%;
+        margin-top: 0.125rem;
     }
 }

@@ -1,4 +1,4 @@
-import { tempUnitLabel, type UnitSettings } from "../utils/units";
+import { convertTemp, tempUnitLabel, type UnitSettings } from "../utils/units";
 import sunny from "../assets/images/icon-sunny.webp";
 import partlyCloudy from "../assets/images/icon-partly-cloudy.webp";
 import overcast from "../assets/images/icon-overcast.webp";
@@ -68,26 +68,38 @@ const DailyForecast = ({ data, units }: DailyForecastProps) => {
       <h2 className="section-title">Daily forecast</h2>
 
       <div className="daily-forecast__list">
-        {items.map((d) => (
-          <article className="daily-forecast__item" key={d.date}>
-            <p className="daily-forecast__day">{d.day}</p>
+        {items.map((d) => {
+          const max =
+            typeof d.max === "number"
+              ? convertTemp(d.max, units.temperature)
+              : null;
 
-            <div className="daily-forecast__icon" aria-hidden="true">
-              <img src={iconFromCode(d.code)} alt="" />
-            </div>
+          const min =
+            typeof d.min === "number"
+              ? convertTemp(d.min, units.temperature)
+              : null;
 
-            <p className="daily-forecast__temps">
-              <span>
-                {d.max !== null ? Math.round(d.max) : "--"}
-                {d.max !== null ? unit : ""}
-              </span>
-              <span>
-                {d.min !== null ? Math.round(d.min) : "--"}
-                {d.min !== null ? unit : ""}
-              </span>
-            </p>
-          </article>
-        ))}
+          return (
+            <article className="daily-forecast__item" key={d.date}>
+              <p className="daily-forecast__day">{d.day}</p>
+
+              <div className="daily-forecast__icon" aria-hidden="true">
+                <img src={iconFromCode(d.code)} alt="" />
+              </div>
+
+              <p className="daily-forecast__temps">
+                <span>
+                  {max !== null ? Math.round(max) : "--"}
+                  {max !== null ? unit : ""}
+                </span>
+                <span>
+                  {min !== null ? Math.round(min) : "--"}
+                  {min !== null ? unit : ""}
+                </span>
+              </p>
+            </article>
+          );
+        })}
       </div>
     </section>
   );

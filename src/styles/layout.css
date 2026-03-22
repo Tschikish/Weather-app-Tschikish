@@ -1,27 +1,33 @@
 .app-root {
-  max-width: 76rem;
-  margin: 0 auto;
-  padding: 40px 24px 60px;
-  font-size: 18px;
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+    font-size: 18px;
 }
 
 .page-main {
-  margin-top: 40px;
+    margin-top: 40px;
 }
 
 .content-row {
-  align-items: flex-start;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--layout-right-col);
-  column-gap: var(--layout-gap);
+    align-items: flex-start;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--layout-right-col);
+    column-gap: var(--layout-gap);
 }
 
 .content-main {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .content-sidebar {
-  width: 100%;
+    width: 100%;
+}
+
+@media (max-width: 900px) {
+    .search-row {
+        flex-direction: column;
+    }
 }

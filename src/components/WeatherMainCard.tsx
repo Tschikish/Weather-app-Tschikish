@@ -83,7 +83,7 @@ const WeatherMainCard = ({
       >
         <div className="weather-main-card__body">
           <div className="weather-main-card__location">
-            <p className="weather-main-card__city">Select a city</p>
+            <p className="weather-main-card__city">Belgrade, Serbia</p>
             <p className="weather-main-card__date">&nbsp;</p>
           </div>
 
