@@ -245,6 +245,11 @@
     border-radius: 10px;
 }
 
+.search-dropdown-item.active {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 0.25rem;
+}
+
 .search-icon {
     margin-right: 10px;
     opacity: 1;
@@ -733,7 +738,8 @@ search-button-flex-wrapper {
 
 @media (max-width: 900px) {
     .app-root {
-        max-width: 900px;
+        /*max-width: 900px;*/
+        height: 100%;
     }
 
     .content-row {

@@ -37,7 +37,7 @@ async function fetchWeather(options: UseWeatherQueryOptions) {
   console.log(url);
 
   // Simulates loading behavior since data is sourced from a static JSON file instead of an API
-  await sleep(1500);
+  await sleep(2500);
 
   const res = await fetch(url);
   if (!res.ok) {

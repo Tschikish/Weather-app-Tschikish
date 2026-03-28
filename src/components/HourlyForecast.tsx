@@ -1,14 +1,8 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import { tempUnitLabel, convertTemp, type UnitSettings } from "../utils/units";
 import DropDownIcon from "../assets/images/icon-dropdown.svg";
-import sunny from "../assets/images/icon-sunny.webp";
-import partlyCloudy from "../assets/images/icon-partly-cloudy.webp";
-import overcast from "../assets/images/icon-overcast.webp";
-import drizzle from "../assets/images/icon-drizzle.webp";
-import rain from "../assets/images/icon-rain.webp";
-import snow from "../assets/images/icon-snow.webp";
-import fog from "../assets/images/icon-fog.webp";
-import storm from "../assets/images/icon-storm.webp";
+
+import { weatherCodeToIcon } from "../utils/weatherIcons";
 
 type HourlyForecastProps = {
   data: any;
@@ -27,21 +21,6 @@ type DayOption = {
 };
 
 const FORECAST_DAYS_COUNT = 7;
-
-const iconFromCode = (code: number | null | undefined) => {
-  if (typeof code !== "number") return sunny;
-
-  if (code === 0) return sunny;
-  if ([1, 2].includes(code)) return partlyCloudy;
-  if (code === 3) return overcast;
-  if ([45, 48].includes(code)) return fog;
-  if ([51, 53, 55].includes(code)) return drizzle;
-  if ([61, 63, 65, 80, 81, 82].includes(code)) return rain;
-  if ([71, 73, 75, 85, 86].includes(code)) return snow;
-  if ([95, 96, 99].includes(code)) return storm;
-
-  return sunny;
-};
 
 const getDayKey = (date: Date) => {
   const year = date.getFullYear();
@@ -226,7 +205,7 @@ const HourlyForecast = ({ data, units }: HourlyForecastProps) => {
           >
             <span>{selectedDayLabel}</span>
             <span className="hourly-forecast__chevron" aria-hidden="true">
-              <img src={DropDownIcon} alt=""/>
+              <img src={DropDownIcon} alt="" />
             </span>
           </button>
 
@@ -259,13 +238,13 @@ const HourlyForecast = ({ data, units }: HourlyForecastProps) => {
               <div className="hourly-forecast__icon" aria-hidden="true">
                 {hour.weatherCode !== null ? (
                   <img
-                    src={iconFromCode(hour.weatherCode)}
+                    src={weatherCodeToIcon(hour.weatherCode)}
                     alt=""
                     aria-hidden="true"
                   />
                 ) : (
                   <img
-                    src={sunny}
+                    src={weatherCodeToIcon(null)}
                     alt=""
                     aria-hidden="true"
                   />
