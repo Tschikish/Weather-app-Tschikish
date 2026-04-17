@@ -37,3 +37,15 @@ body {
   color: white;
   -webkit-font-smoothing: antialiased;
 }
+
+@media (min-width: 901px) {
+  html,
+  body,
+  #root {
+    height: 100dvh;
+  }
+
+  body {
+    overflow: hidden;
+  }
+}
