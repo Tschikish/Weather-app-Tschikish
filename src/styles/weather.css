@@ -268,11 +268,10 @@
 
 .weather-main-card {
     position: relative;
-    flex: 1;
     background: linear-gradient(135deg, #4f67ff 0%, #6a5cff 100%);
     border-radius: 20px;
     padding: 3.5rem 20px;
-    margin-bottom: 24px;
+    margin-bottom: 2.5rem;
     overflow: hidden;
 }
 
@@ -399,6 +398,7 @@
 .weather-main-card__temp {
     font-size: 64px;
     font-weight: 700;
+    font-style: italic;
 }
 
 .weather-stats-row {
@@ -507,6 +507,7 @@
 }
 
 .daily-forecast {
+    justify-self: flex-end;
     flex: 1;
     display: flex;
     flex-direction: column;

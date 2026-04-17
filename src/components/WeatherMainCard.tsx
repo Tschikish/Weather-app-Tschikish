@@ -41,7 +41,7 @@ const WeatherMainCard = ({
       >
         <div className="weather-main-card__body">
           <div className="weather-main-card__location">
-            <p className="weather-main-card__city">{locationLabel}</p>
+            {/* <p className="weather-main-card__city">{locationLabel}</p> */}
             <p className="weather-main-card__date">&nbsp;</p>
           </div>
 

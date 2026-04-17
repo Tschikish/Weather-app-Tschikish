@@ -73,8 +73,8 @@ export function getMatchingUnitSystem(
   return null;
 }
 
-export function tempUnitLabel(unit: TemperatureUnit): "°C" | "°F" {
-  return unit === "celsius" ? "°C" : "°F";
+export function tempUnitLabel(unit: TemperatureUnit): "°"  {
+  return unit === "celsius" ? "°" : "°";
 }
 
 export function windUnitLabel(unit: WindSpeedUnit): "km/h" | "mph" {
