@@ -10,18 +10,21 @@ import type { CityOption } from "./types/location";
 import { METRIC_UNIT_SETTINGS, type UnitSettings } from "./utils/units";
 
 const App = () => {
-  const [selectedCity, setSelectedCity] = useState<CityOption>(DEFAULT_LOCATION);
+  const [selectedCity, setSelectedCity] = useState<CityOption | null>(null);
   const [unitSettings, setUnitSettings] =
     useState<UnitSettings>(METRIC_UNIT_SETTINGS);
 
+  const activeCity = selectedCity ?? DEFAULT_LOCATION;
+
   const weatherCoordinates = {
-    latitude: selectedCity.latitude,
-    longitude: selectedCity.longitude,
-    timezone: selectedCity.timezone,
+    latitude: activeCity.latitude,
+    longitude: activeCity.longitude,
+    timezone: activeCity.timezone,
   };
 
   const { data: weatherData, isPending, error } =
     useWeatherQuery(weatherCoordinates);
+  const displayCity = selectedCity ?? (isPending ? null : DEFAULT_LOCATION);
 
   return (
     <div className="app-root">
@@ -38,7 +41,7 @@ const App = () => {
               data={weatherData}
               units={unitSettings}
               loading={isPending}
-              city={selectedCity}
+              city={displayCity}
             />
             <Stats data={weatherData} units={unitSettings} />
             <DailyForecast data={weatherData} units={unitSettings} />

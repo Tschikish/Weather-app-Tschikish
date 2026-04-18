@@ -12,7 +12,7 @@ type WeatherMainCardProps = {
   data: WeatherForecastResponse | undefined;
   units: UnitSettings;
   loading: boolean;
-  city: CityOption;
+  city: CityOption | null;
 };
 
 const WeatherMainCard = ({
@@ -23,7 +23,7 @@ const WeatherMainCard = ({
 }: WeatherMainCardProps) => {
   const unitLabel = tempUnitLabel(units.temperature);
   const snapshot = getCurrentWeatherSnapshot(data);
-  const locationLabel = `${city.name}, ${city.country}`;
+  const locationLabel = city ? `${city.name}, ${city.country}` : "\u00A0";
   const dateLabel = formatWeatherDateLabel(
     data?.daily.time[0] ?? snapshot?.time,
     {
@@ -41,7 +41,7 @@ const WeatherMainCard = ({
       >
         <div className="weather-main-card__body">
           <div className="weather-main-card__location">
-            {/* <p className="weather-main-card__city">{locationLabel}</p> */}
+            <p className="weather-main-card__city">{locationLabel}</p>
             <p className="weather-main-card__date">&nbsp;</p>
           </div>
 
@@ -101,7 +101,7 @@ const WeatherMainCard = ({
       <div className="weather-main-card__body">
         <div className="weather-main-card__location">
           <p
-            key={city.id}
+            key={city?.id ?? "default-location"}
             className="weather-main-card__city weather-main-card__city--enter"
           >
             {locationLabel}

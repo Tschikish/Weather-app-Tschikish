@@ -1,7 +1,7 @@
 .app-root {
-    max-width: 76rem;
+    max-width: 80rem;
     margin: 0 auto;
-    padding: 40px 24px 60px;
+    padding: 2.5rem 7.5rem 3.75rem;
     font-size: 18px;
     min-height: 100dvh;
 }

@@ -80,7 +80,7 @@
     padding-top: 8px;
 }
 
-.units-toggle__section + .units-toggle__section {
+.units-toggle__section+.units-toggle__section {
     margin-top: 10px;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -270,8 +270,8 @@
     position: relative;
     background: linear-gradient(135deg, #4f67ff 0%, #6a5cff 100%);
     border-radius: 20px;
-    padding: 3.5rem 20px;
-    margin-bottom: 2.5rem;
+    padding: 4.5rem 20px;
+    margin-bottom: 1.5rem;
     overflow: hidden;
 }
 
@@ -324,11 +324,13 @@
 }
 
 @keyframes weatherLoaderPulse {
+
     0%,
     100% {
         transform: scale(0.9);
         opacity: 0.35;
     }
+
     50% {
         transform: scale(1.15);
         opacity: 1;
@@ -362,6 +364,7 @@
         opacity: 0;
         transform: translateX(5rem);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
@@ -383,6 +386,7 @@
         opacity: 0;
         transform: translateY(1rem);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -471,12 +475,10 @@
     width: 90%;
     height: 65%;
     border-radius: 999px;
-    background: linear-gradient(
-        45deg,
-        rgba(120, 160, 255, 0.05) 0%,
-        rgba(120, 160, 255, 0.18) 50%,
-        rgba(120, 160, 255, 0.05) 100%
-    );
+    background: linear-gradient(45deg,
+            rgba(120, 160, 255, 0.05) 0%,
+            rgba(120, 160, 255, 0.18) 50%,
+            rgba(120, 160, 255, 0.05) 100%);
     background-size: 200% 100%;
     animation: statsValueShimmer 2s linear infinite;
 }
@@ -486,6 +488,7 @@
         opacity: 0;
         transform: translateY(8px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -496,6 +499,7 @@
     from {
         background-position: 200% 0;
     }
+
     to {
         background-position: -200% 0;
     }
@@ -556,8 +560,11 @@
 .hourly-forecast {
     background: var(--neutral-800);
     border-radius: 20px;
-    padding-bottom: 12px;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding-bottom: 2rem;
 }
 
 .hourly-forecast__header {
@@ -568,7 +575,7 @@
     margin-bottom: 0.5rem;
 }
 
-.hourly-forecast__header > h2 {
+.hourly-forecast__header>h2 {
     margin-bottom: 0px;
 }
 
@@ -633,14 +640,17 @@
 }
 
 .hourly-forecast__list {
+    flex: 1;
+    min-height: 0;
     list-style: none;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    max-height: 29.75rem;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: thin;
+    margin: 0;
+    padding: 0 12px 12px;
 }
 
 .hourly-forecast__list::-webkit-scrollbar {
@@ -652,7 +662,6 @@
     min-height: 48px;
     padding: 0.5rem 1rem;
     border-radius: 0.4rem;
-    margin: 0 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
